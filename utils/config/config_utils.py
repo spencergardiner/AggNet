@@ -95,6 +95,7 @@ def parse_config(*args):
                            'utils/config/default_config/dataset/MyDataset.yaml',
                            'utils/config/default_config/model/MyModel.yaml']
     default_config_list = [os.path.join(root_path, x) for x in default_config_list]
+    default_config_list.append("/home/ssgardin/nobackup/autodelete/AggNet/utils/config/default_config/dataset/NNKDataset.yaml")
     default_config = merge_config(default_config, *default_config_list)
     config = merge_config(default_config, *args, *cmd_args)
     return config

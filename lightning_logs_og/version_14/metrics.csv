@@ -1,0 +1,2 @@
+epoch,step,stage,loss,ACC,AUC,MCC,Q-value,F1,F0.5,F2,SE,SP,PPV,NPV,TP,FP,TN,FN
+0,0,valid,0.5988,0.844,0.355,-0.068,0.435,,,,0.0,0.871,0.0,0.964,0,4,27,1

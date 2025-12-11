@@ -21,14 +21,14 @@ progress_bar_callback:
   refresh_rate: 1
 ckpt_callback:
   filename: '{epoch:02d}, {loss_epoch:.3f}'
-  monitor: valid_loss_epoch
+  monitor: valid/loss_epoch
   save_top_k: 10
   mode: min
   save_last: True
   verbose: false
   save_weights_only: false
 early_stop_callback:
-  monitor: valid_loss_epoch
+  monitor: valid/loss_epoch
   min_delta: 0.01
   patience: 200
   mode: min

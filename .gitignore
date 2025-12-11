@@ -10,3 +10,5 @@ result/
 figure/
 temp/
 cache/
+**/*.ckpt
+**/*events.*

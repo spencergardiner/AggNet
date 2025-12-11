@@ -1,0 +1,27 @@
+======================================================================
+STEP 1: Loading NNK Dataset
+======================================================================
+Loading existing dataset from ./data/NNK
+
+======================================================================
+STEP 2: Configuring Training
+======================================================================
+cmd_args ['/home/ssgardin/nobackup/autodelete/AggNet/data/100K/massive_exp__aggregation__thompson.xlsx']
+Traceback (most recent call last):
+  File "/home/ssgardin/nobackup/autodelete/AggNet/script/train_apnet.py", line 185, in <module>
+    main()
+    ~~~~^^
+  File "/home/ssgardin/nobackup/autodelete/AggNet/script/train_apnet.py", line 181, in main
+    train_apnet_nnk(args.excel_path, config_overrides)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ssgardin/nobackup/autodelete/AggNet/script/train_apnet.py", line 63, in train_apnet_nnk
+    config = parse_config(*config_args)
+  File "/home/ssgardin/nobackup/autodelete/AggNet/utils/config/config_utils.py", line 99, in parse_config
+    config = merge_config(default_config, *args, *cmd_args)
+  File "/home/ssgardin/nobackup/autodelete/AggNet/utils/config/config_utils.py", line 68, in merge_config
+    config = OmegaConf.merge(config, OmegaConf.load(x))
+                                     ~~~~~~~~~~~~~~^^^
+  File "/home/ssgardin/.conda/envs/agnet/lib/python3.13/site-packages/omegaconf/omegaconf.py", line 189, in load
+    with io.open(os.path.abspath(file_), "r", encoding="utf-8") as f:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/nobackup/autodelete/usr/ssgardin/AggNet/script/utils/config/default_config/dataset/NNKDataset.yaml'

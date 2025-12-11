@@ -106,7 +106,7 @@ class ProteinDataset(Data.Dataset):
         # save metadata
         if not os.path.exists(self.csv) or overwrite:
             check_path(self.csv)
-            self.metadata.to_csv(self.csv, index=False)
+            self.metadata.to_csv(self.csv, index=False, na_rep='NaN')
 
         # save sequence
         if not os.path.exists(self.fasta) or overwrite:
@@ -135,7 +135,7 @@ class ProteinDataset(Data.Dataset):
 
     def load_metadata(self, indices=None):
         if os.path.exists(self.csv):
-            self.metadata = pd.read_csv(self.csv)
+            self.metadata = pd.read_csv(self.csv, keep_default_na=False, na_values=['NaN', 'nan', ''])
             if indices is not None:
                 self.metadata = self.metadata.iloc[indices].reset_index(drop=True)
         else:

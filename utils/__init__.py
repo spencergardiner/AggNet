@@ -19,7 +19,7 @@ if root_path not in sys.path:
 
 paths = OmegaConf.create()
 paths['root'] = os.path.join(root_path, '')
-paths['data'] = os.path.join(root_path, 'data', '')
+paths['data'] = os.path.join(root_path, 'data', 'A abnd B ')
 paths['dataset'] = os.path.join(root_path, 'dataset', '')
 paths['result'] = os.path.join(root_path, 'result', '')
 paths['script'] = os.path.join(root_path, 'script', '')
@@ -28,5 +28,5 @@ paths['utils'] = os.path.join(utils_path, '')
 paths['cache'] = os.path.join(root_path, 'cache', '')
 
 # modify the following paths according to your own environment
-conda_path = '/home/hew/anaconda3/'
-conda_env = 'AggNet'
+conda_path = '/home/ssgardin/.conda'
+conda_env = 'agnet'

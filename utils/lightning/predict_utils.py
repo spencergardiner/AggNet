@@ -100,7 +100,7 @@ class LitModelInference:
         self.ckpt_config = \
         dict_to_config(torch.load(self.ckpt_path, weights_only=False, map_location=map_location)['hyper_parameters'])[
             'config']
-        self.ckpt_model = model_class.load_from_checkpoint(ckpt_path, map_location=map_location)
+        self.ckpt_model = model_class.load_from_checkpoint(ckpt_path, map_location=map_location, weights_only=False)
         self.device = next(self.ckpt_model.parameters()).device  # auto-detect the used device
         self.map_location = map_location
         self.accelerator = accelerator

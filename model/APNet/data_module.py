@@ -39,7 +39,8 @@ class DataModule(L.LightningDataModule):
         self.predict_dataloader_args = self.config.predict_dataloader
 
         dataset_args = self.dataset_args.dataset
-        self.dataset = ProteinDataset(dataset_args) if isinstance(dataset_args, str) else dataset_args
+        # self.dataset = ProteinDataset(dataset_args) if isinstance(dataset_args, str) else dataset_args
+        self.dataset=None
         self.tokenizer = ProteinTokenizer(**self.tokenization_args)
         self.select_indices = None
         self.dataframe = None
@@ -48,14 +49,18 @@ class DataModule(L.LightningDataModule):
         self.valid_dataset = None
         self.test_dataset = None
         self.predict_dataset = None
-
-        self.max_len = self.dataset_args.max_len if self.dataset_args.max_len is not None else self.dataset.metadata.length.max()
+        self.max_len = None
+        # self.max_len = self.dataset_args.max_len if self.dataset_args.max_len is not None else self.dataset.metadata.length.max()
         self.state = False  # whether the data is prepared
 
     def prepare_data(self):
         if not self.state:  # run only once to avoid repeated preparation and split changes
             # each run gives different select_indices. Thus, ensure only one run to avoid different results
             # select data with sequence length <= max_len
+
+
+            # load_nnk_data does the splitting
+            '''
             select_indices = self.dataset.metadata[self.dataset.metadata['length'] <= self.max_len].index
 
             # select a subset of the dataset for debug
@@ -72,11 +77,20 @@ class DataModule(L.LightningDataModule):
             else:
                 if self.log:
                     print('use the original split of the dataset')
+            '''
 
             self.dataframe = self.dataset.metadata
+            # sort dataframe by index
+            self.dataframe = self.dataframe.sort_index()
+            print(self.dataframe.head())
+            print(self.dataframe.tail())
             self.train_index = self.dataframe[self.dataframe['split'] == 'train'].index.tolist()
+            len_train_idx = len(self.train_index)
             self.valid_index = self.dataframe[self.dataframe['split'] == 'valid'].index.tolist()
+            len_val_idx = len(self.valid_index)
             self.test_index = self.dataframe[self.dataframe['split'] == 'test'].index.tolist()
+            len_text_idx = len(self.test_index)
+            print(len_train_idx, len_text_idx, len_val_idx)
             self.test_index = self.test_index if len(self.test_index) > 0 else self.train_index
             self.valid_index = self.valid_index if len(self.valid_index) > 0 else self.test_index
             self.predict_index = None
@@ -84,7 +98,9 @@ class DataModule(L.LightningDataModule):
 
             if self.log:
                 print(
-                    f'[prepare_data] max_len: {self.max_len}, subset_ratio: {subset_ratio}, number: {len(self.dataframe)}')
+                    # f'[prepare_data] max_len: {self.max_len}, subset_ratio: {subset_ratio}, number: {len(self.dataframe)}')
+                    f'[prepare_data] max_len: {self.max_len}, number: {len(self.dataframe)}')
+
 
             self.load_cache()
 

@@ -1,0 +1,127 @@
+config:
+  project: APNet_NNK
+  seed: 42
+  tokenization:
+    alphabet: ESM-1b
+    truncation_seq_length: null
+  train_dataloader:
+    batch_size: 32
+    num_workers: 8
+    shuffle: true
+    drop_last: true
+    pin_memory: true
+    persistent_workers: true
+  valid_dataloader:
+    batch_size: 32
+    num_workers: 8
+    shuffle: false
+    pin_memory: true
+    persistent_workers: true
+  test_dataloader:
+    batch_size: 32
+    num_workers: 8
+    shuffle: false
+    pin_memory: false
+    persistent_workers: false
+  predict_dataloader:
+    batch_size: 32
+    num_workers: 8
+    shuffle: false
+    pin_memory: false
+    persistent_workers: false
+  trainer:
+    max_epochs: 50
+    accelerator: auto
+    strategy: auto
+    devices: auto
+    deterministic: false
+    benchmark: true
+    sync_batchnorm: true
+    log_every_n_steps: 1
+    check_val_every_n_epoch: 1
+    fast_dev_run: false
+    num_sanity_val_steps: 1
+    enable_model_summary: true
+    reload_dataloaders_every_n_epochs: 0
+    gradient_clip_val: 2.0
+    gradient_clip_algorithm: norm
+  logger:
+    save_dir: ./
+    name: lightning_logs
+  progress_bar_callback:
+    refresh_rate: 1
+  ckpt_callback:
+    filename: '{epoch:02d}, {loss_epoch:.3f}'
+    monitor: valid_loss_epoch
+    save_top_k: 10
+    mode: min
+    save_last: true
+    verbose: false
+    save_weights_only: false
+  early_stop_callback:
+    monitor: valid_loss_epoch
+    min_delta: 0.01
+    patience: 200
+    mode: min
+  swa_callback:
+    swa_lrs: 0.0002
+    swa_epoch_start: 0.8
+    annealing_epochs: 10
+    annealing_strategy: cos
+  dataset:
+    dataset: null
+    max_len: null
+    mini_set_ratio: null
+    split:
+      test_size: 0
+      valid_size: null
+      stratify: label
+      mode: discrete
+      seed: 42
+    path: ./data/NNK
+    name: NNK
+  cache:
+    seq2esm: null
+    seq2token: null
+    seq2aaindex: null
+    selected_aaindex: ./checkpoint/selected_aaindex.pt
+  hparams:
+    embed_dim: 256
+    task_heads:
+      cls_head:
+        hiddens:
+        - 256
+        - 128
+        - 2
+        activation: ReLU
+        dropout: 0.1
+    down_mlp:
+      hiddens:
+      - 1280
+      - 512
+      - 256
+      activation: ReLU
+      dropout: 0.1
+    feature_mlp:
+      hiddens:
+      - 300
+      - 256
+      activation: ReLU
+      dropout: 0.1
+    esm_model_name: esm2_t33_650M_UR50D
+    esm_freeze: true
+    return_contacts: false
+  optimizer:
+    name: AdamW
+    args:
+      lr: 0.001
+      weight_decay: 0.01
+  scheduler:
+    name: CosineAnnealingLR
+    args:
+      T_max: 50
+      eta_min: 1.0e-06
+    interval: epoch
+    frequency: 1
+  /home/ssgardin/nobackup/autodelete/AggNet/data/100K/massive_exp__aggregation__thompson:
+    xlsx: null
