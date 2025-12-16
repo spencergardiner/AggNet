@@ -1,4 +1,5 @@
 # AggNet
+### _NOTE: This readme is unaltered from the forked repo. It details how to intall and use a pre-trained AggNet model. I created [`.\ProjectStructure.md`](https://github.com/spencergardiner/AggNet/blob/main/ProjectStructure.md), which details how the code is organized and how to train a model from scratch.
 
 ## Clone and Create environment
 
